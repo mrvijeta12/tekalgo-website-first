@@ -1,9 +1,7 @@
 <?php
-
-include_once "./session.php";
+include_once "session.php";
 check_login();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,9 +9,11 @@ check_login();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TinyMCE Image Upload Example</title>
-    <link rel="stylesheet" href="./assets/css/addblog.css">
+    <title>TinyMCE Blog Post Editor</title>
+    <link rel="stylesheet" href="assets/css/addblog.css">
     <script src="./tinymce/tinymce.min.js"></script>
+
+    <!-- Initialize TinyMCE Editor with Image Upload Support -->
     <script>
         const image_upload_handler_callback = (blobInfo, progress) => new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -70,7 +70,7 @@ check_login();
                 'forecolor backcolor emoticons',
             menu: {
                 favs: {
-                    title: 'menu',
+                    meta_title: 'menu',
                     items: 'code visualaid | searchreplace | emoticons'
                 }
             },
@@ -83,66 +83,42 @@ check_login();
 </head>
 
 <body>
-    <?php include "./navbar.php" ?>
-    <section class="from-section">
-        <form method="POST" action="saveContent.php" enctype="multipart/form-data" class="form">
+    <?php include "navbar.php" ?>
+
+    <section class="form-section">
+        <form method="POST" action="savecontent.php" enctype="multipart/form-data" class="form">
+
             <h1>Add Blog</h1>
-            <textarea id="editor" name="editorContent"></textarea>
-            <input type="submit" name="create" value="Create">
+
+            <!-- meta_title Field (Required) -->
+            <div class="form-group">
+                <label for="meta_title">meta_title *</label>
+                <input type="text" id="meta_title" name="meta_title" required>
+            </div>
+
+            <!-- summary Field (Required) -->
+            <div class="form-group">
+                <label for="summary">summary *</label>
+                <textarea id="summary" name="summary" rows="5" required></textarea>
+            </div>
+
+            <!-- Feature Image Upload (Required) -->
+            <div class="form-group">
+                <label for="featureImage">Feature Image *</label>
+                <input type="file" id="featureImage" name="social_sharing_image" accept="image/*" required>
+            </div>
+
+            <!-- Blog content (TinyMCE Editor) -->
+            <div class="form-group">
+                <label for="editor">Blog content *</label>
+                <textarea id="editor" name="editorContent"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <input type="submit" name="create" value="Publish">
         </form>
     </section>
-
-
-
-
-
-    <!-- new added  -->
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <textarea name="editor1" style="border: 2px solid red;"></textarea>
-            <script>
-                CKEDITOR.replace('editor1');
-            </script> -->

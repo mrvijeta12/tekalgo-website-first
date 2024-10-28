@@ -3,9 +3,8 @@
   padding: 0px;
   box-sizing: border-box;
 }
-html,
-body {
-  width: 100%;
+html{
+  scroll-behavior: smooth;
 }
 body {
   font-family: Arial, sans-serif;
@@ -14,7 +13,7 @@ body {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 90px;
+  
 }
 .wrapper h1 {
   font-family: "Montserrat-Bold", sans-serif;

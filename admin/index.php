@@ -1,6 +1,6 @@
 <?php
-include "./config/database.php";
-include_once "./session.php"; // Include the session management file
+include 'database.php';
+include_once 'session.php'; 
 
 // Check if form is submitted
 if (isset($_POST["signup"])) {
@@ -16,7 +16,7 @@ if (isset($_POST["signup"])) {
     }
 
     // Check if email is already registered
-    $check_query = "SELECT * FROM users WHERE email = ?";
+    $check_query = "SELECT * FROM auth WHERE email = ?";
     $check_stmt = $conn->prepare($check_query);
     $check_stmt->bind_param("s", $email);
     $check_stmt->execute();
@@ -30,7 +30,7 @@ if (isset($_POST["signup"])) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Prepare and execute SQL statement to insert new user
-        $insert_query = "INSERT INTO users (email, password) VALUES (?, ?)";
+        $insert_query = "INSERT INTO auth (email, password) VALUES (?, ?)";
         $insert_stmt = $conn->prepare($insert_query);
         $insert_stmt->bind_param("ss", $email, $hashed_password);
 
@@ -63,7 +63,7 @@ if (isset($_POST["signup"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/index.css">
     <!-- <link rel="stylesheet" href="./css/responsive.css"> -->
     <title>Document</title>
 </head>
@@ -83,7 +83,7 @@ if (isset($_POST["signup"])) {
             <input type="password" name="password" placeholder="Password" required>
             <input type="submit" value="Sign Up" name="signup">
             <span>Already have an account?</span>
-            <a href="login.php">Log In</a>
+            <a href="login">Log In</a>
         </form>
     </section>
 </body>

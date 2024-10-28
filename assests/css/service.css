@@ -3,13 +3,16 @@
   padding: 0px;
   box-sizing: border-box;
 }
+html{
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: Arial, sans-serif;
 }
 .wrapper {
   width: 100%;
-  margin-top: 90px;
+
 
   display: flex;
   flex-direction: column;

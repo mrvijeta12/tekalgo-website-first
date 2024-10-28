@@ -1,121 +1,73 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .content-container {
-  margin: 50px 30px;
   display: flex;
-  margin-bottom: 20px;
+ 
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 5px;
   overflow: hidden;
   cursor: pointer;
-  max-height: 300px;
-  position: relative; /* Allows absolute positioning of the edit button */
-}
-li,
-ol {
-  list-style-position: inside;
+  width: 70%;
+  margin: 20px auto ;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 20px;
 }
 
 .image-container {
-  flex: 0 0 25%; /* Takes 40% of the container's width */
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  /* justify-content: center; */
-  padding: 10px;
-  /* background-color: #f9f9f9; */
-  max-width: 40%; /* Ensures the container does not exceed 40% of the container width */
+  width: 200px; /* Set width for the image */
+  height: 200px;
+  margin-right: 20px;
 }
 
+
+
 .image-container img {
-  width: 200px; /* Fixed width for images */
-  height: 150px; /* Fixed height for images */
-  object-fit: cover; /* Ensures images are not distorted */
-  margin: 5px;
+  width: 200px;
+  height:  200px;
   border-radius: 8px;
 }
 
 .text-content {
-  flex: 1;
-  padding: 15px;
-  overflow: hidden;
-  max-height: 100%;
-  gap: 5px;
-  display: flex;
-  flex-direction: column;
-  max-width: 90%;
-}
-.text-content h1,
-.text-content h2,
-.text-content h3,
-.text-content h4,
-.text-content h5,
-.text-content h6 {
-  margin-bottom: 10px;
-}
-.text-content p {
-  line-height: 25px;
-}
-
-.edit-form {
-  position: absolute;
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
-  margin: 0; /* Remove any default margin */
-  text-align: center;
+  padding: 10px;
+  flex-grow: 1; /* Take the remaining space */
 }
 
 .edit-button {
-  background-color: #007bff;
-  color: #fff;
+  margin-top: 10px;
+  padding: 6px 20px;
+  color: white;
+  background-color: #007BFF;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
   cursor: pointer;
+  transition: all 0.2s linear;
+  border-radius: 5px;
+}
+.edit-button:hover{
+  background-color: #0056b3
+
 }
 
-.edit-button:hover {
-  background-color: #0056b3;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+@media screen and  (max-width: 800px) {
   .content-container {
-    flex-direction: column;
-    max-height: 400px;
+ 
+    width: 90%;
+    margin: 20px auto ;
   }
-
+}
+  @media screen and  (max-width: 600px) {
+    .content-container {
+   flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: center;
+  }
   .image-container {
-    width: 80%; /* Takes full width on smaller screens */
-    max-width: 80%;
-    padding: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    /* justify-content: center; */
-  }
 
-  .image-container img {
-    width: 150px; /* Adjust image size for smaller screens */
-    height: 100px;
-  }
-
-  .text-content {
-    padding: 10px;
-    max-width: 100%;
+    margin-right: 0;
   }
 }
-
-@media (max-width: 480px) {
-  .content-container {
-    margin: 50px 10px;
-  }
-  .text-content {
-    padding: 5px;
-    font-size: 14px; /* Adjust font size for smaller screens */
-  }
-
-  .image-container img {
-    width: 100px; /* Further adjust image size for very small screens */
-    height: 100px;
-    margin: 2px;
-  }
-}
+  

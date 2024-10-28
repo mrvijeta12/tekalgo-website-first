@@ -1,6 +1,6 @@
 <?php
-include "./config/database.php";
-include_once "./session.php"; // Include session management file
+include "database.php";
+include_once "session.php"; // Include session management file
 
 if (isset($_POST["signin"])) {
     $email = $_POST['email'];
@@ -13,7 +13,7 @@ if (isset($_POST["signin"])) {
     }
 
     // Check if email is registered
-    $query = "SELECT * FROM users WHERE email = ?";
+    $query = "SELECT * FROM auth WHERE email = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -26,7 +26,7 @@ if (isset($_POST["signin"])) {
             $_SESSION['email'] = $email;
 
             // Redirect to home page or another protected page
-            header("Location: dashboard.php");
+            header("Location: dashboard");
             exit();
         } else {
             $email_error = "Invalid email or password";
@@ -46,7 +46,7 @@ if (isset($_POST["signin"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/login.css">
     <!-- <link rel="stylesheet" href="./css/responsive.css"> -->
     <title>Document</title>
 </head>
@@ -66,7 +66,7 @@ if (isset($_POST["signin"])) {
             <?php endif; ?>
             <input type="submit" value="Sign In" name="signin"></input>
             <span>Do not have an acoount?</span>
-            <a href="index.php">Sign Up</a>
+            <a href="index">Sign Up</a>
 
         </form>
     </section>

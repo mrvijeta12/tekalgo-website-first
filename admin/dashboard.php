@@ -1,21 +1,17 @@
 <?php
-include_once "./session.php";
+include_once "session.php";
 check_login();
+include_once 'database.php';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "blog";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch all content with ID
-$sql = "SELECT id, content FROM content_table ORDER BY id DESC";
+// Fetch all blog posts with slug, summary, and feature image
+$sql = "SELECT id, slug, summary, social_sharing_image FROM main_website_blog ORDER BY id DESC";
 $result = $conn->query($sql);
+
+// Check if the query was successful
+if ($result === false) {
+    die("SQL Error: " . $conn->error); // Output the error message
+}
 
 $contents = [];
 if ($result->num_rows > 0) {
@@ -23,7 +19,7 @@ if ($result->num_rows > 0) {
         $contents[] = $row;
     }
 } else {
-    $contents[] = ["id" => 0, "content" => "No content found."];
+    $contents[] = ["id" => 0, "slug" => "No content found.", "summary" => "", "social_sharing_image" => ""];
 }
 
 $conn->close();
@@ -36,17 +32,16 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Content Layout</title>
-    <link rel="stylesheet" href="./assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
     <script>
-        function handleContainerClick(event, id) {
+        function handleContainerClick(event, slug) {
             if (!event.target.classList.contains('edit-button')) {
-                window.location.href = 'viewContent.php?id=' + id;
+                // Redirecting to viewContent.php with the slug
+                window.location.href = 'insights?slug=' + encodeURIComponent(slug);
             }
         }
     </script>
-    <style>
-        /* Add your CSS styles here */
-    </style>
+    
 </head>
 
 <body>
@@ -54,56 +49,35 @@ $conn->close();
 
     <?php foreach ($contents as $row): ?>
         <?php
-        $content = $row['content'];
+        $slug = htmlspecialchars($row['slug']);
+        $summary = htmlspecialchars($row['summary']);
         $id = $row['id'];
-
-        // Load HTML content and remove images
-        $doc = new DOMDocument();
-        libxml_use_internal_errors(true);
-        $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
-        @$doc->loadHTML($content);
-        libxml_clear_errors();
-
-        $xpath = new DOMXPath($doc);
-        $images = $xpath->query('//img');
-
-        // Extract and display images separately
-        $imageHtml = '';
-        foreach ($images as $img) {
-            $src = htmlspecialchars($img->getAttribute('src'));
-            $alt = htmlspecialchars($img->getAttribute('alt'));
-            $imageHtml .= "<img src='{$src}' alt='{$alt}'>";
-        }
-
-        // Remove images from content
-        foreach ($images as $img) {
-            $img->parentNode->removeChild($img);
-        }
-
-        // Get the cleaned content
-        $textContent = $doc->saveHTML();
+        $featureImage = htmlspecialchars($row['social_sharing_image']);
         ?>
 
-        <div class='content-container' onclick='handleContainerClick(event, <?= $id ?>)'>
-
+        <div class='content-container' onclick='handleContainerClick(event, "<?= $slug ?>")'>
             <!-- Image Container -->
             <div class='image-container'>
-                <?php echo $imageHtml; ?>
+                <?php if ($featureImage): ?>
+                    <img src='<?= $featureImage ?>' alt='Feature Image'>
+                <?php else: ?>
+                    <img src='default-image.png' alt='Default Image'> <!-- Optional default image -->
+                <?php endif; ?>
             </div>
 
-            <!-- Text Content -->
+            <!-- Text Content -->  
             <div class='text-content'>
-                <?php echo $textContent; ?>
+                <h2><?= $slug ?></h2> <!-- Displaying the slug as meta_title -->
+                <p><?= $summary ?></p>
             </div>
 
             <!-- Edit Button -->
             <?php if ($id > 0): ?>
-                <form method='GET' action='editblog.php' class='edit-form'>
-                    <input type='hidden' name='id' value='<?= $id ?>'>
+                <form method='GET' action='editblog' class='edit-form'>
+                    <input type='hidden' name='slug' value='<?= $slug ?>'>
                     <button type='submit' class='edit-button'>Edit</button>
                 </form>
             <?php endif; ?>
-
         </div>
 
     <?php endforeach; ?>

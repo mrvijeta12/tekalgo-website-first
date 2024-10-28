@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # If the URL is the root (empty), redirect to home.php
+#   RewriteRule ^$ home.php [L]
+
+  # If the request is not for a directory...
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # ...and if the request is for a file that exists with a .php extension
+  RewriteCond %{REQUEST_FILENAME}.php -f
+
+  # Rewrite the URL to the corresponding .php file
+  RewriteRule ^(.*)$ $1.php [NC,L]
+</IfModule>
+

@@ -1,41 +1,40 @@
 <?php
-include_once "./session.php";
+include_once "session.php";
 check_login();
+include_once 'database.php';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "blog";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "blog";
 
-// Create a new connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }
 
-// Check if delete-id is set
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete-id'])) {
-    $id = intval($_POST['delete-id']);
+// Check if delete ID is provided
+if (isset($_POST['delete-id'])) {
+    $id = (int)$_POST['delete-id'];
 
-    // Prepare and execute delete query
-    $stmt = $conn->prepare("DELETE FROM content_table WHERE id = ?");
+    // Prepare and execute delete statement
+    $stmt = $conn->prepare("DELETE FROM main_website_blog  WHERE id = ?");
     $stmt->bind_param("i", $id);
 
     if ($stmt->execute()) {
-        // Redirect back to viewContent.php with a success message
-        header('Location: dashboard.php?deleted=success');
+        // Successful deletion
+        header("Location: deleteblog?success=1");
+        exit;
     } else {
-        // Redirect back to viewContent.php with an error message
-        header('Location: dashboard.php?deleted=error');
+        // Error handling
+        echo "Error deleting record: " . $stmt->error;
     }
 
     $stmt->close();
 } else {
-    // Redirect back to viewContent.php if accessed without proper parameters
-    header('Location: dashboard.php?deleted=error');
+    echo "No ID provided for deletion.";
 }
 
 $conn->close();
-exit();
+?>

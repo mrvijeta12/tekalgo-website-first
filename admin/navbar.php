@@ -1,5 +1,5 @@
 <?php
-include_once "./session.php";
+include_once "session.php";
 check_login();
 ?>
 
@@ -9,7 +9,7 @@ check_login();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
 
     <title>Document</title>
 </head>
@@ -28,12 +28,12 @@ check_login();
             <div class="bar"></div>
         </div>
         <ul class="nav-links">
-            <li><a href="dashboard.php" class="nav-link <?php echo ($current_page == 'dashboard.php') ? 'active' : ''; ?>">Dashboard</a></li>
+            <li><a href="dashboard" class="nav-link <?php echo ($current_page == 'dashboard.php') ? 'active' : ''; ?>">Dashboard</a></li>
 
-            <li><a href="addblog.php" class="nav-link <?php echo ($current_page == 'addblog.php') ? 'active' : ''; ?>">Add Blog</a></li>
+            <li><a href="addblog" class="nav-link <?php echo ($current_page == 'addblog.php') ? 'active' : ''; ?>">Add Blog</a></li>
             <!-- <li><a href="editblog.php" class="nav-link <?php echo ($current_page == 'editblog.php') ? 'active' : ''; ?>">Edit Blog</a></li> -->
-            <li><a href="deleteblog.php" class="nav-link <?php echo ($current_page == 'deleteblog.php') ? 'active' : ''; ?>">Delete Blog</a></li>
-            <li><a href="logout.php" class="nav-link >">Log Out</a></li>
+            <li><a href="deleteblog" class="nav-link <?php echo ($current_page == 'deleteblog.php') ? 'active' : ''; ?>">Delete Blog</a></li>
+            <li><a href="logout" class="nav-link >">Log Out</a></li>
 
         </ul>
     </nav>
