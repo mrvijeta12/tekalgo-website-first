@@ -1,3 +1,91 @@
+<?php
+
+include_once 'db.php';
+
+// Pagination settings
+$blogsPerPage = 3; // Number of blogs per page
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Current page
+$offset = ($currentPage - 1) * $blogsPerPage; // Offset calculation
+
+// Fetch blogs with pagination
+$sql = "SELECT id, slug, summary, social_sharing_image FROM main_website_blog 
+        WHERE category = 'salesforce-education-cloud' AND blog_status = 'published' 
+        ORDER BY id DESC 
+        LIMIT $blogsPerPage OFFSET $offset";
+$result = $conn->query($sql);
+
+// Check if the query was successful
+if ($result === false) {
+    die("SQL Error: " . $conn->error); // Output the error message
+}
+
+$contents = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $contents[] = $row;
+    }
+} else {
+    $contents[] = ["id" => 0, "slug" => "No content found.", "summary" => "", "social_sharing_image" => ""]; // Empty placeholder
+}
+
+// Count total blogs for pagination
+$totalBlogsResult = $conn->query("SELECT COUNT(*) AS total FROM main_website_blog WHERE category = 'salesforce-education-cloud' AND blog_status = 'published'");
+$totalBlogs = $totalBlogsResult->fetch_assoc()['total'];
+$totalPages = ceil($totalBlogs / $blogsPerPage); // Total number of pages
+
+$conn->close();
+
+// Check if it's an AJAX request to return only the blog wrapper and pagination
+if (isset($_GET['ajax']) && $_GET['ajax'] === '1') {
+    echo json_encode([
+        'content' => renderBlogs($contents),
+        'pagination' => renderPagination($currentPage, $totalPages)
+    ]);
+    exit();
+}
+// Helper function to render the blogs
+function renderBlogs($blogs)
+{
+    $html = '';
+    foreach ($blogs as $row) {
+        $slug = htmlspecialchars($row['slug']);
+        $summary = htmlspecialchars($row['summary']);
+        $featureImage = !empty($row['social_sharing_image']) ? 'admin/' . htmlspecialchars($row['social_sharing_image']) : 'default-image.png';
+
+        $html .= "<div class='content-container'>
+                    <div class='image-container'>
+                        <img src='{$featureImage}' alt='Feature Image'>
+                    </div>
+                    <div class='text-content'>
+                        <h2>{$slug}</h2>
+                        <a href='insight/{$slug}' class='read-more'>Read More <img src='images/right-arrow.svg' alt='' id='arrow'></a>
+                    </div>
+                </div>";
+    }
+
+    return $html;
+}
+
+// Helper function to render the pagination
+function renderPagination($currentPage, $totalPages)
+{
+    $pagination = '';
+
+    if ($currentPage > 1) {
+        $pagination .= "<a href='#' class='prev' data-page='" . ($currentPage - 1) . "'>Previous</a>";
+    }
+
+    for ($i = 1; $i <= $totalPages; $i++) {
+        $pagination .= "<a href='#' class='" . ($i === $currentPage ? 'active' : '') . "' data-page='{$i}'>{$i}</a>";
+    }
+
+    if ($currentPage < $totalPages) {
+        $pagination .= "<a href='#' class='next' data-page='" . ($currentPage + 1) . "'>Next</a>";
+    }
+
+    return $pagination;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,8 +164,8 @@
     <!-- AOS CSS CDN for scroll animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-      <!-- Font Awesome CDN for icons -->
-      <script src="https://kit.fontawesome.com/cdf9a174a4.js" crossorigin="anonymous"></script>
+    <!-- Font Awesome CDN for icons -->
+    <script src="https://kit.fontawesome.com/cdf9a174a4.js" crossorigin="anonymous"></script>
 </head>
 
 
@@ -87,12 +175,16 @@
 
     <?php include_once('navbar.php'); ?>
     <section class="service-wrapper ">
+        <div class="hero">
+            <h1>Salesforce Education Cloud</h1>
+
+        </div>
         <section class="service-content-wrapper">
             <section class="service-content-image service" data-aos="fade-up-right" data-aos-duration="1500">
                 <img src="images/secondary-choose.jpg" alt="">
             </section>
             <section class="service-content-data service " data-aos="fade-left" data-aos-duration="1500">
-                <h1>Salesforce Education Cloud</h1>
+
                 <p><strong>Salesforce Education Cloud</strong> is a comprehensive platform designed to meet the unique needs of educational institutions, from K-12 schools to higher education universities. It helps institutions streamline operations, enhance student engagement, and provide a connected experience for students, faculty, and staff. By leveraging CRM, automation, and AI, Education Cloud enables educational organizations to build stronger relationships and support student success. Here are some key features of Salesforce Education Cloud:-</p>
 
                 <ul>
@@ -111,12 +203,30 @@
 
 
         </section>
+        <div class="book" data-aos="zoom-in" data-aos-duration="1500">
+            <a href="https://calendly.com/salesfocesclouds/30min" class="book">Book Your Free Consultation</a>
+
+        </div>
+
+        <!-- ####### blog #####  -->
+
+        <div class="container" data-aos="zoom-in" data-aos-duration="1000">
+            <h1>Exploring Industry Trends, Ideas, and Real-World Solutions</h1>
+
+        </div>
+
+        <div class="blog-wrapper" id="blog-wrapper" data-aos="fade-up" data-aos-duration="1000">
+            <!-- Blog content will be injected dynamically -->
+            <?php echo renderBlogs($contents); ?>
+        </div>
+
+        <!-- Pagination Links -->
+        <div class="pagination" id="pagination">
+            <?php echo renderPagination($currentPage, $totalPages); ?>
+        </div>
 
     </section>
-    <div class="book" data-aos="zoom-in" data-aos-duration="1500">
-        <a href="https://calendly.com/salesfocesclouds/30min" class="book">Book Your Free Consultation</a>
 
-    </div>
     <?php
     include('footer.php');
     ?>

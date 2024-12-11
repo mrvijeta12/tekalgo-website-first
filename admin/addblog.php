@@ -84,40 +84,81 @@ check_login();
 
 <body>
     <?php include "navbar.php" ?>
+    <div class="container">
+        <main class="content">
 
-    <section class="form-section">
-        <form method="POST" action="savecontent.php" enctype="multipart/form-data" class="form">
 
-            <h1>Add Blog</h1>
 
-            <!-- meta_title Field (Required) -->
-            <div class="form-group">
-                <label for="meta_title">meta_title *</label>
-                <input type="text" id="meta_title" name="meta_title" required>
-            </div>
+            <section class="form-section">
+                <form method="POST" action="postblog.php" enctype="multipart/form-data" class="form">
 
-            <!-- summary Field (Required) -->
-            <div class="form-group">
-                <label for="summary">summary *</label>
-                <textarea id="summary" name="summary" rows="5" required></textarea>
-            </div>
+                    <h1>Add Blog</h1>
 
-            <!-- Feature Image Upload (Required) -->
-            <div class="form-group">
-                <label for="featureImage">Feature Image *</label>
-                <input type="file" id="featureImage" name="social_sharing_image" accept="image/*" required>
-            </div>
+                    <!-- meta_title Field (Required) -->
+                    <div class="form-group">
+                        <label for="meta_title">Title*</label>
+                        <input type="text" id="meta_title" name="meta_title" required>
+                    </div>
 
-            <!-- Blog content (TinyMCE Editor) -->
-            <div class="form-group">
-                <label for="editor">Blog content *</label>
-                <textarea id="editor" name="editorContent"></textarea>
-            </div>
+                    <!-- summary Field (Required) -->
+                    <div class="form-group">
+                        <label for="summary">Summary*</label>
+                        <textarea id="summary" name="summary" rows="5" required></textarea>
+                    </div>
 
-            <!-- Submit Button -->
-            <input type="submit" name="create" value="Publish">
-        </form>
-    </section>
+                    <!-- Feature Image Upload (Required) -->
+                    <div class="form-group">
+                        <label for="featureImage">Feature Image*</label>
+                        <input type="file" id="featureImage" name="social_sharing_image" accept="image/*" required>
+                    </div>
+
+                    <!-- Blog Categories -->
+                    <div class="form-group">
+                        <label for="category">Choose Category*</label>
+                        <select id="category" name="category">
+                            <optgroup label="">
+                                <option value="home">Home</option>
+                                <option value="about-us">About Us</option>
+                                <option value="our-services"> Our Services</option>
+                                <option value="successes">Successes</option>
+                                <option value="insights">Insights</option>
+                                <option value="salesforce-sales-cloud">Salesforce Sales Cloud</option>
+                                <option value="salesforce-service-cloud">Salesforce Service Cloud</option>
+                                <option value="salesforce-marketing-cloud">Salesforce Marketing Cloud</option>
+                                <option value="salesforce-commerce-cloud">Salesforce Commerce Cloud</option>
+                                <option value="salesforce-experience-cloud">Salesforce Experience Cloud</option>
+                                <option value="salesforce-finance-cloud">Salesforce Finance Cloud</option>
+                                <option value="salesforce-community-cloud">Salesforce Community Cloud</option>
+                                <option value="salesforce-healthcare-cloud">Salesforce Healthcare Cloud</option>
+                                <option value="salesforce-education-cloud">Salesforce Education Cloud</option>
+                                <option value="salesforce-public-cloud">Salesforce Public Cloud</option>
+                                <option value="salesforce-analytic-cloud">Salesforce Analytic Cloud</option>
+                            </optgroup>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Blog content (TinyMCE Editor) -->
+                    <div class="form-group">
+                        <label for="editor">Blog Content*</label>
+                        <textarea id="editor" name="editorContent"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="button">
+                        <input type="submit" name="addToDraft" value="Add To Draft" class="action-btn">
+                        <input type="submit" name="create" value="Publish" class="action-btn">
+
+
+                    </div>
+                </form>
+            </section>
+
+
+        </main>
+    </div>
+
 
 </body>
 

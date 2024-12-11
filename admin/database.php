@@ -1,29 +1,18 @@
-// Show dropdown on hover for larger screens
-dropdownToggle.onmouseenter = function(e) {
-if (window.innerWidth > 850) {
-e.stopPropagation();
-dropdownMenu.classList.add("show");
-dropdownMenu.style.display = "flex";
-}
-};
 
-dropdownToggle.onmouseleave = function(e) {
-if (window.innerWidth > 850) {
-dropdownMenu.classList.remove("show");
-dropdownMenu.style.display = "none";
-}
-};
+<?php
 
-// Show dropdown on click for smaller screens
-dropdownToggle.onclick = function(e) {
-if (window.innerWidth <= 850) {
-    e.stopPropagation();
-    dropdownMenu.classList.toggle("show");
-    dropdownMenu.style.display=dropdownMenu.classList.contains("show") ? "flex" : "none" ;
+$host = '62.72.28.204';
+$dbname = 'u360288577_slsfrcclds';
+$username = 'u360288577_tekAlgo_slsfrs';
+$password = '[Cc/?;6nQ2';
+
+try {
+    $conn = new mysqli($host, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        throw new Exception("Connection failed: " . $conn->connect_error);
     }
-    };
-    }
-
-    // Call the function on page load and on window resize
-    handleHover();
-    window.onresize=handleHover;
+} catch (Exception $e) {
+    die("Connection failed: " . $e->getMessage());
+}
+?>

@@ -121,7 +121,7 @@
 }
 
 /* Mobile and Tablet View */
-@media (max-width: 850px) {
+@media (max-width: 1000px) {
   .nav-links {
     list-style: none;
     display: flex;
@@ -142,7 +142,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 70%;
+    width: 300px;
     /* max-width: 70%; */
     height: 100vh; /* Full height */
     background-color: rgba(11, 92, 171, 1);

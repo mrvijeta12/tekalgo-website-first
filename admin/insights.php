@@ -35,7 +35,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($blog['meta_title']); ?></title>
     <link rel="stylesheet" href="assets/css/viewContent.css">
-    <style>
+    <!-- <style>
         .container {
             display: flex;
             justify-content: space-between;
@@ -43,12 +43,15 @@ $conn->close();
         }
 
         .text-content {
-            flex: 1; /* Take the remaining space */
-            padding-right: 20px; /* Add space between text and image */
+            flex: 1;
+
+            padding-right: 20px;
+
         }
 
         .image-container {
-            width: 300px; /* Set width for the feature image */
+            width: 300px;
+
         }
 
         .image-container img {
@@ -69,33 +72,35 @@ $conn->close();
         .back-button:hover {
             background-color: #0056b3;
         }
-    </style>
+    </style> -->
 </head>
 
 <body>
     <!-- Navigation Bar -->
     <?php include "navbar.php"; ?>
-    
-    <div class="container">
-        <!-- Image Container -->
-        <div class="image-container">
-            <?php 
-            $imagePath = htmlspecialchars($blog['social_sharing_image']); // Get the image path
-            ?>
-            <?php if ($imagePath): ?>
-                <img src="<?php echo $imagePath; ?>" alt="Feature Image">
-            <?php else: ?>
-                <img src="default-image.png" alt="Default Image"> <!-- Optional default image -->
-            <?php endif; ?>
-        </div>
 
-        <!-- Text Content -->
-        <div class="text-content">
-            <h1><?php echo htmlspecialchars($blog['meta_title']); ?></h1>
-            <p><?php echo htmlspecialchars($blog['summary']); ?></p>
-            <div><?php echo $blog['content']; ?></div>
-        </div>
-        <a href="dashboard.php" class="back-button">Back to Dashboard</a>
+    <div class="container">
+        <main class="content">
+            <!-- Image Container -->
+            <div class="image-container">
+                <?php
+                $imagePath = htmlspecialchars($blog['social_sharing_image']); // Get the image path
+                ?>
+                <?php if ($imagePath): ?>
+                    <img src="<?php echo $imagePath; ?>" alt="Feature Image">
+                <?php else: ?>
+                    <img src="default-image.png" alt="Default Image"> <!-- Optional default image -->
+                <?php endif; ?>
+            </div>
+
+            <!-- Text Content -->
+            <div class="text-content">
+                <h1><?php echo htmlspecialchars($blog['meta_title']); ?></h1>
+                <p><?php echo htmlspecialchars($blog['summary']); ?></p>
+                <div><?php echo $blog['content']; ?></div>
+            </div>
+
+        </main>
     </div>
 
 </body>

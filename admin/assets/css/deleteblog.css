@@ -1,79 +1,140 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.content-container {
+.wrapper {
   display: flex;
- 
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  overflow: hidden;
-  cursor: pointer;
-  width: 70%;
-  margin: 20px auto ;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding: 20px;
+  width: 100%;
+  height: 100%;
+  /* border: 2px solid red; */
+  gap: 20px;
 }
 
-.image-container {
-  width: 200px; /* Set width for the image */
-  height: 200px;
-  margin-right: 20px;
+.child2 {
+  flex-grow: 1;
+  padding: 30px 20px 30px 0px;
+  /* border: 2px solid blue; */
 }
-
-
-
-.image-container img {
+.child1 {
   width: 200px;
-  height:  200px;
-  border-radius: 8px;
+  /* border: 2px solid red; */
 }
+.form-group {
+  max-width: 100%;
 
-.text-content {
-  padding: 10px;
-  flex-grow: 1; /* Take the remaining space */
+  padding: 40px 30px;
+  background-color: #fff;
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 40px -6px;
+  border-radius: 6px;
 }
 
 .delete-button {
   margin-top: 10px;
   padding: 6px 20px;
   color: white;
-  background-color: #007BFF;
+  background-color: #007bff;
   border: none;
   cursor: pointer;
   transition: all 0.2s linear;
   border-radius: 5px;
-  /* display: flex;
-  align-self: flex-start; */
+
   height: fit-content;
 }
-.delete-button:hover{
-  background-color: #0056b3
-
+.delete-button:hover {
+  background-color: #0056b3;
 }
 
-@media screen and  (max-width: 800px) {
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.blog-table th,
+.blog-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.blog-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.blog-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.blog-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+.category {
+  width: 100%;
+
+  padding: 10px;
+  margin-top: 10px;
+}
+.blog-container {
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  /* .child2 {
+    width: 100%;
+  }
+  .child1 {
+    display: none;
+  } */
+  .form-group {
+    width: 85%;
+    padding: 15px;
+    margin: 50px 50px;
+    position: absolute;
+    top: 50px;
+
+    left: 50%;
+    /* right: 50%; */
+    margin: 50px 0px;
+    transform: translateX(-50%);
+    overflow-x: auto;
+  }
+
+  table td {
+    padding: 15px !important;
+  }
+}
+@media screen and (max-width: 600px) {
   .content-container {
- 
-    width: 90%;
-    margin: 20px auto ;
-  }
-  .delete-button{
-    /* align-self: center; */
-  }
-}
-  @media screen and  (max-width: 600px) {
-    .content-container {
-   flex-direction: column;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
     text-align: center;
   }
   .image-container {
-
     margin-right: 0;
   }
 }
-  

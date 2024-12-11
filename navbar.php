@@ -1,12 +1,12 @@
 <?php
 
-echo $current_page = basename($_SERVER['PHP_SELF']);
+$current_page = basename($_SERVER['PHP_SELF']);
 
 ?>
 <nav class="navbar">
 
-    <a href="../home" class="logo-link">
-        <img src="../images/logo1.png" alt="Logo" class="logo" />
+    <a href="/tekalgo/home" class="logo-link">
+        <img src="/tekalgo/images/logo1.png" alt="Logo" class="logo" />
     </a>
 
     </a>
@@ -22,53 +22,54 @@ echo $current_page = basename($_SERVER['PHP_SELF']);
             <i class="fas fa-times"></i>
         </span>
 
-        <li><a href="../home" class="nav-link <?php echo ($current_page == 'home.php') ? 'current' : ''; ?>">Home</a></li>
-        <li><a href="../about" class="nav-link <?php echo ($current_page == 'about.php') ? 'current' : ''; ?>">About</a></li>
+        <li><a href="/tekalgo/home" class="nav-link <?php echo ($current_page == 'home.php') ? 'current' : ''; ?>">Home</a></li>
+        <li><a href="/tekalgo/about-us" class="nav-link <?php echo ($current_page == 'about-us.php') ? 'current' : ''; ?>">About Us</a></li>
 
         <li class="dropdown">
-            <a href="../services" class="dropbtn nav-link <?php echo ($current_page == 'services.php') ? 'current' : ''; ?> ">Services</a>
+            <a href="/tekalgo/our-services" class="dropbtn nav-link <?php echo ($current_page == 'our-services.php') ? 'current' : ''; ?> ">Our Services</a>
             <span class="dropdown-icon" id="dropdown-toggle"><i class="fa-solid fa-caret-down"></i></span>
 
             <ul class="dropdown-content" id="dropdown-menu">
                 <li>
-                    <a href="../salesforce-sales-cloud">Salesforce Sales Cloud</a>
+                    <a href="/tekalgo/salesforce-sales-cloud">Salesforce Sales Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-service-cloud">Salesforce Service Cloud</a>
+                    <a href="/tekalgo/salesforce-service-cloud">Salesforce Service Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-marketing-cloud">Salesforce Marketing Cloud</a>
+                    <a href="/tekalgo/salesforce-marketing-cloud">Salesforce Marketing Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-commerce-cloud">Salesforce Commerce Cloud</a>
+                    <a href="/tekalgo/salesforce-commerce-cloud">Salesforce Commerce Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-experience-cloud">Salesforce Experience Cloud</a>
+                    <a href="/tekalgo/salesforce-experience-cloud">Salesforce Experience Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-financial-cloud">Salesforce Financial Cloud</a>
+                    <a href="/tekalgo/salesforce-financial-cloud">Salesforce Financial Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-community-cloud">Salesforce Community Cloud</a>
+                    <a href="/tekalgo/salesforce-community-cloud">Salesforce Community Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-healthcare-cloud">Salesforce Healthcare Cloud</a>
+                    <a href="/tekalgo/salesforce-healthcare-cloud">Salesforce Healthcare Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-education-cloud">Salesforce Education Cloud</a>
+                    <a href="/tekalgo/salesforce-education-cloud">Salesforce Education Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-public-cloud">Salesforce Public Cloud</a>
+                    <a href="/tekalgo/salesforce-public-cloud">Salesforce Public Cloud</a>
                 </li>
                 <li>
-                    <a href="../salesforce-analytic-cloud">Salesforce Analytic Cloud</a>
+                    <a href="/tekalgo/salesforce-analytic-cloud">Salesforce Analytic Cloud</a>
                 </li>
             </ul>
         </li>
+        <li><a href="/tekalgo/insights" class="nav-link <?php echo ($current_page == 'insights.php') ? 'current' : ''; ?>">Insights</a></li>
+        <li><a href="/tekalgo/successes" class="nav-link <?php echo ($current_page == 'successes.php') ? 'current' : ''; ?>">Successes</a></li>
 
-        <li><a href="../contact" class="nav-link <?php echo ($current_page == 'contact.php') ? 'current' : ''; ?>">Contact</a></li>
-        <li><a href="../blog" class="nav-link <?php echo ($current_page == 'blog.php') ? 'current' : ''; ?>">Blog</a></li>
-        <li><a href="../success" class="nav-link <?php echo ($current_page == 'success.php') ? 'current' : ''; ?>">Success</a></li>
+        <li><a href="/tekalgo/contact-us" class="nav-link <?php echo ($current_page == 'contact-us.php') ? 'current' : ''; ?>">Contact Us</a></li>
+
 
 
     </ul>

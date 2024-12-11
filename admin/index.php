@@ -1,6 +1,6 @@
 <?php
 include 'database.php';
-include_once 'session.php'; 
+include_once 'session.php';
 
 // Check if form is submitted
 if (isset($_POST["signup"])) {
@@ -8,15 +8,16 @@ if (isset($_POST["signup"])) {
     // Retrieve form data
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $username = $_POST['username'];
 
     // Validate inputs
-    if (empty($email) || empty($password)) {
+    if (empty($email) || empty($password) || empty($username)) {
         echo "All fields are required.";
         exit();
     }
 
     // Check if email is already registered
-    $check_query = "SELECT * FROM auth WHERE email = ?";
+    $check_query = "SELECT * FROM auth  WHERE email = ?";
     $check_stmt = $conn->prepare($check_query);
     $check_stmt->bind_param("s", $email);
     $check_stmt->execute();
@@ -30,9 +31,9 @@ if (isset($_POST["signup"])) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Prepare and execute SQL statement to insert new user
-        $insert_query = "INSERT INTO auth (email, password) VALUES (?, ?)";
+        $insert_query = "INSERT INTO auth (email, password,username) VALUES (?, ?, ?)";
         $insert_stmt = $conn->prepare($insert_query);
-        $insert_stmt->bind_param("ss", $email, $hashed_password);
+        $insert_stmt->bind_param("sss", $email, $hashed_password, $username);
 
         if ($insert_stmt->execute()) {
             // Set session variables
@@ -72,6 +73,8 @@ if (isset($_POST["signup"])) {
     <section class="form-wrapper">
         <form action="" method="POST" class="form">
             <h2>Register</h2>
+            <label for="">Name</label>
+            <input type="text" name="username" placeholder="Enter Your Name" required>
 
             <label for="">Email</label>
             <input type="email" name="email" placeholder="Email" required>

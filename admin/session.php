@@ -3,9 +3,6 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-
-
 // Function to check if a user is logged in
 function check_login()
 {
@@ -14,11 +11,3 @@ function check_login()
         exit();
     }
 }
-
-
-// ##################### check session store variable #####################
-// if (isset($_SESSION['email'])) {
-//     echo "Logged in as: " . htmlspecialchars($_SESSION['email']);
-// } else {
-//     echo "No user is currently logged in.";
-// }

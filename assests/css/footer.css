@@ -3,72 +3,43 @@ body {
 }
 
 .footer_wrapper {
-  margin-top: 50px;
+  /* margin-top: 50px; */
   width: 100%;
   border-radius: 20px 20px 0px 0px;
   background-color: #fff;
 }
 
-/* ################################### Get In Touch ################################# */
-.connection {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  color: white;
-  /* background-color: lightskyblue; */
-  /* background-image: linear-gradient(
-        89.5deg,
-        rgba(131, 204, 255, 1) 0.4%,
-        rgba(66, 144, 251, 1) 100.3%
-      ); */
-
-  /* background-image: radial-gradient(
-    circle 610px at 5.2% 51.6%,
-    rgba(5, 8, 114, 1) 0%,
-    rgba(7, 3, 53, 1) 97.5%
-  ); */
-  background-color: rgba(11, 92, 171, 1);
-  width: 100%;
-}
-
-.connection p {
-  font-size: 1.25rem;
-  font-family: Montserrat-SemiBold;
-}
-.connection img {
-  width: 30px;
-  height: 30px;
-}
-
-.connection li {
-  list-style-type: none;
-  display: inline-block;
-  margin-left: 20px;
-  color: white;
-}
-.footer_wrapper li {
-  list-style-type: none;
-}
-
-/* ############################### Footer data  Section ############################### */
+/* ###### Footer data  Section ##### */
 
 .footer_data {
   display: flex;
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 40px 20px;
   background-color: rgba(11, 92, 171, 1);
   color: white;
   width: 100%;
+  border-bottom: 1px solid #ddd;
 }
 
 .footer_data_box {
-  max-width: 400px;
   flex: 1;
-  color: white;
   background-color: rgba(11, 92, 171, 1);
+}
+
+.footer_data_box h2 {
+  margin-bottom: 20px;
+}
+.footer_data_box h4 {
+  margin-bottom: 10px;
+}
+.footer_data_box p {
+  margin-bottom: 8px;
+  font-size: 14px !important;
+}
+.footer_data_box img {
+  height: 60px;
 }
 .footer_data_box h1 {
   font-family: "Montserrat-Bold";
@@ -82,6 +53,8 @@ body {
   color: white;
   font-size: 1rem;
   font-family: Montserrat-Regular;
+  list-style-type: none;
+  line-height: 25px;
 }
 .footer_data_box p {
   color: white;
@@ -91,6 +64,9 @@ body {
 
 .footer_data_box li {
   margin-bottom: 10px;
+}
+.footer_data_box li::marker {
+  color: transparent;
 }
 
 .contact_details {
@@ -102,23 +78,28 @@ body {
   height: auto;
   margin-right: 10px;
   filter: invert(100%) brightness(200%);
-  /* color: black; */
 }
 
-/* ############################## copyrights ############################### */
-
-.footer_wrapper .content {
-  border-top: 1px solid white !important;
+.footer_data_box i {
+  margin-right: 10px;
   color: white;
-  background-color: rgba(11, 92, 171, 1);
-  line-height: 30px;
-  width: 100%;
-  font-family: Montserrat-Medium;
-  text-align: center;
-  padding: 20px;
+  font-size: 28px;
+}
+.footer_data_box i:hover {
+  transform: scale(1.05);
+}
+.copyright {
+  padding-bottom: 10px;
+}
+.certification {
+  width: 200px;
+  height: auto !important;
+}
+.social-icons {
+  text-align: right !important;
 }
 
-/* ############################### RESPONSIVE SECTION ############################### */
+/* ##### RESPONSIVE SECTION ###### */
 @media screen and (max-width: 768px) {
   .footer_data {
     display: flex;
@@ -127,15 +108,7 @@ body {
   .footer_data h1 {
     margin-bottom: 10px;
   }
-}
-
-@media screen and (max-width: 420px) {
-  .connection img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .connection p {
-    font-size: 1rem;
+  .social-icons {
+    text-align: left !important;
   }
 }

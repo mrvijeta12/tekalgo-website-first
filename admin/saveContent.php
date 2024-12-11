@@ -6,7 +6,7 @@ include_once 'database.php';
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
     // Sanitize input fields
     $meta_title = isset($_POST['meta_title']) ? $conn->real_escape_string($_POST['meta_title']) : '';
     $summary = isset($_POST['summary']) ? $conn->real_escape_string($_POST['summary']) : '';
@@ -67,4 +67,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close connection
     $conn->close();
 }
-?>

@@ -1,0 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 40px -6px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.category {
+  width: 100%;
+
+  padding: 10px;
+  margin-top: 10px;
+}
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  /* border: 1px solid red; */
+}
+
+.blog-table th,
+.blog-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.blog-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.blog-table tr:hover {
+  background-color: #f1f1f1;
+  /* cursor: pointer; */
+}
+
+/* Style for the Action heading */
+.action-heading {
+  font-weight: bold;
+  margin-bottom: 10px; /* Space between the heading and actions */
+  font-size: 14px; /* Optional: Adjust the font size */
+  text-align: center; /* Optional: Center the heading */
+}
+
+/* Style for action buttons */
+.action-content {
+  text-align: center; /* Center the action items */
+  margin-bottom: 10px; /* Space between the actions */
+}
+
+/* Optional: Style the Edit button */
+.edit-button,
+.publish-button,
+.delete-button {
+  background-color: transparent; /* Blue background */
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 20px;
+  border: none;
+}
+
+/* Optional: Style the Publish button */
+.publish-button {
+  color: #28a745;
+  transition: all 0.3s linear;
+}
+.edit-button {
+  color: #0056b3;
+  transition: all 0.3s linear;
+}
+.delete-button {
+  color: red;
+  transition: all 0.3s linear;
+}
+
+/* Hover effects (Optional) */
+
+.publish-button:hover {
+  color: #02ff39;
+}
+.edit-button:hover {
+  color: #017cff;
+}
+
+@media screen and (max-width: 768px) {
+  table td {
+    padding: 15px !important;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .wrapper {
+    width: 100%; /* Full width on small screens */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    padding-right: 20px; /* Add padding on the right to account for scrollbar space */
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+  }
+
+  table {
+    min-width: 550px; /* Maintain the minimum width of the table for horizontal scrolling */
+  }
+}

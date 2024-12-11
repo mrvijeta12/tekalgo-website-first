@@ -3,16 +3,7 @@ include_once "session.php";
 check_login();
 include_once 'database.php';
 
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname = "blog";
 
-// $conn = new mysqli($servername, $username, $password, $dbname);
-
-// if ($conn->connect_error) {
-//     die("Connection failed: " . $conn->connect_error);
-// }
 
 // Check if delete ID is provided
 if (isset($_POST['delete-id'])) {
@@ -24,7 +15,7 @@ if (isset($_POST['delete-id'])) {
 
     if ($stmt->execute()) {
         // Successful deletion
-        header("Location: deleteblog?success=1");
+        header("Location:blogs.php");
         exit;
     } else {
         // Error handling
@@ -37,4 +28,3 @@ if (isset($_POST['delete-id'])) {
 }
 
 $conn->close();
-?>

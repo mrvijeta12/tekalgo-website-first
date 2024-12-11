@@ -8,12 +8,12 @@ body {
 }
 
 .container {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
+  max-width: 100%;
+  /* margin: 20px auto; */
+  /* padding: 20px; */
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -23,6 +23,11 @@ body {
 li,
 ol {
   list-style-position: inside;
+}
+
+li p,
+ol p {
+  display: inline;
 }
 
 .image-container {
@@ -36,8 +41,8 @@ ol {
 
 .image-container img {
   width: 100%;
-  max-width: 250px; /* Maintain max width on larger screens */
-  height: 200px; /* Fixed height for images */
+  width: 500px; /* Maintain max width on larger screens */
+  height: 400px; /* Fixed height for images */
   object-fit: cover; /* Ensure images cover the container without distortion */
   margin-bottom: 10px;
   border-radius: 8px;

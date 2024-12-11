@@ -1,62 +1,186 @@
+<?php
+// Capture the current page URL
+$current_page_url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+// Include your database connection file
+include 'db.php';
+
+try {
+    // Fetch SEO data from the database for the current page
+    $query = "SELECT * FROM public_pages_seo_setup WHERE page_url = ? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $current_page_url);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Fetched SEO data
+    $seo_data = $result->fetch_assoc();
+
+    // Default meta values
+    $defaults = [
+        'page_title' => 'Default Page Title',
+        'meta_description' => 'Default description of the page for SEO.',
+        'meta_keywords' => 'default, keywords, seo',
+        'meta_robots' => 'index, follow',
+        'canonical_url' => $current_page_url,
+        'og_title' => 'Default Open Graph Title',
+        'og_description' => 'Default Open Graph description.',
+        'og_image' => 'default-og-image.jpg',
+        'og_url' => $current_page_url,
+        'og_type' => 'website',
+        'og_site_name' => 'Default Site Name',
+        'og_locale' => 'en_US',
+        'twitter_card' => 'summary',
+        'twitter_site' => '@defaultsite',
+        'twitter_creator' => '@defaultcreator',
+        'meta_author' => 'Default Author',
+        'meta_viewport' => 'width=device-width, initial-scale=1',
+        'meta_theme_color' => '#ffffff',
+        'meta_charset' => 'UTF-8',
+        'schema_markup' => '',
+    ];
+
+    // Merge the fetched data with the defaults
+    $meta = array_merge($defaults, $seo_data ?: []);
+} catch (Exception $e) {
+    // Handle errors and fallback to defaults
+    $meta = $defaults;
+}
+
+// ======= blog =====
+
+// Pagination settings
+$blogsPerPage = 3; // Number of blogs per page
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Current page
+$offset = ($currentPage - 1) * $blogsPerPage; // Offset calculation
+
+// Fetch blogs with pagination
+$sql = "SELECT id, slug, summary, social_sharing_image FROM main_website_blog 
+        WHERE category = 'salesforce-commerce-cloud' AND blog_status = 'published' 
+        ORDER BY id DESC 
+        LIMIT $blogsPerPage OFFSET $offset";
+$result = $conn->query($sql);
+
+// Check if the query was successful
+if ($result === false) {
+    die("SQL Error: " . $conn->error); // Output the error message
+}
+
+$contents = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $contents[] = $row;
+    }
+} else {
+    $contents[] = ["id" => 0, "slug" => "No content found.", "summary" => "", "social_sharing_image" => ""]; // Empty placeholder
+}
+
+// Count total blogs for pagination
+$totalBlogsResult = $conn->query("SELECT COUNT(*) AS total FROM main_website_blog WHERE category = 'salesforce-commerce-cloud' AND blog_status = 'published'");
+$totalBlogs = $totalBlogsResult->fetch_assoc()['total'];
+$totalPages = ceil($totalBlogs / $blogsPerPage); // Total number of pages
+
+$conn->close();
+
+// Check if it's an AJAX request to return only the blog wrapper and pagination
+if (isset($_GET['ajax']) && $_GET['ajax'] === '1') {
+    echo json_encode([
+        'content' => renderBlogs($contents),
+        'pagination' => renderPagination($currentPage, $totalPages)
+    ]);
+    exit();
+}
+// Helper function to render the blogs
+function renderBlogs($blogs)
+{
+    $html = '';
+    foreach ($blogs as $row) {
+        $slug = htmlspecialchars($row['slug']);
+        $summary = htmlspecialchars($row['summary']);
+        $featureImage = !empty($row['social_sharing_image']) ? 'admin/' . htmlspecialchars($row['social_sharing_image']) : 'default-image.png';
+
+        $html .= "<div class='content-container'>
+                    <div class='image-container'>
+                        <img src='{$featureImage}' alt='Feature Image'>
+                    </div>
+                    <div class='text-content'>
+                        <h2>{$slug}</h2>
+                        <a href='insight/{$slug}' class='read-more'>Read More <img src='images/right-arrow.svg' alt='' id='arrow'></a>
+                    </div>
+                </div>";
+    }
+
+    return $html;
+}
+
+// Helper function to render the pagination
+function renderPagination($currentPage, $totalPages)
+{
+    $pagination = '';
+
+    if ($currentPage > 1) {
+        $pagination .= "<a href='#' class='prev' data-page='" . ($currentPage - 1) . "'>Previous</a>";
+    }
+
+    for ($i = 1; $i <= $totalPages; $i++) {
+        $pagination .= "<a href='#' class='" . ($i === $currentPage ? 'active' : '') . "' data-page='{$i}'>{$i}</a>";
+    }
+
+    if ($currentPage < $totalPages) {
+        $pagination .= "<a href='#' class='next' data-page='" . ($currentPage + 1) . "'>Next</a>";
+    }
+
+    return $pagination;
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= htmlspecialchars($meta['og_locale']); ?>">
 
 <head>
     <!-- Primary Meta Tags -->
-    <meta charset="UTF-8">
-    <title>Salesforce Commerce Cloud Services | Enhance Your E-Commerce | SalesClouds</title>
-    <meta name="description" content="Leverage Salesforce Commerce Cloud with SalesClouds to create personalized and seamless shopping experiences across all channels. From omnichannel commerce to AI-powered recommendations, scale your e-commerce operations with ease. Book a free consultation today.">
-    <meta name="keywords" content="Salesforce Commerce Cloud, e-commerce, online storefronts, personalization, omnichannel commerce, order management, AI-powered recommendations, mobile commerce, e-commerce scalability, Salesforce e-commerce platform, SalesClouds services">
-    <meta name="author" content="SalesClouds">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
+    <meta charset="<?= htmlspecialchars($meta['meta_charset']); ?>">
+    <meta name="viewport" content="<?= htmlspecialchars($meta['meta_viewport']); ?>">
+    <title><?= htmlspecialchars($meta['page_title']); ?></title>
+    <meta name="robots" content="<?= htmlspecialchars($meta['meta_robots']); ?>">
+    <meta name="description" content="<?= htmlspecialchars($meta['meta_description']); ?>">
+    <meta name="keywords" content="<?= htmlspecialchars($meta['meta_keywords']); ?>">
+    <meta name="author" content="<?= htmlspecialchars($meta['meta_author']); ?>">
+    <meta name="googlebot" content="<?= htmlspecialchars($meta['meta_robots']); ?>">
+    <meta name="theme-color" content="<?= htmlspecialchars($meta['meta_theme_color']); ?>">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.salesclouds.com/services/salesforce-commerce-cloud">
+    <link rel="canonical" href="<?= htmlspecialchars($meta['canonical_url']); ?>">
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.salesclouds.com/services/salesforce-commerce-cloud">
-    <meta property="og:title" content="Salesforce Commerce Cloud Services | Enhance Your E-Commerce | SalesClouds">
-    <meta property="og:description" content="Learn how SalesClouds can help you optimize Salesforce Commerce Cloud to deliver personalized shopping experiences across web, mobile, and physical stores. Build scalable, secure, and omnichannel e-commerce platforms. Book your free consultation today.">
-    <meta property="og:image" content="https://www.salesclouds.com/images/salesforce-commerce-cloud-thumbnail.jpg">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="<?= htmlspecialchars($meta['og_title']); ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($meta['og_description']); ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($meta['og_image']); ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($meta['og_url']); ?>">
+    <meta property="og:type" content="<?= htmlspecialchars($meta['og_type']); ?>">
+    <meta property="og:locale" content="<?= htmlspecialchars($meta['og_locale']); ?>">
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://www.salesclouds.com/services/salesforce-commerce-cloud">
-    <meta name="twitter:title" content="Salesforce Commerce Cloud Services | Enhance Your E-Commerce | SalesClouds">
-    <meta name="twitter:description" content="Build scalable, personalized e-commerce platforms with Salesforce Commerce Cloud and SalesClouds. Drive sales across web, mobile, and social channels. Book your free consultation today.">
-    <meta name="twitter:image" content="https://www.salesclouds.com/images/salesforce-commerce-cloud-thumbnail.jpg">
+    <meta name="twitter:card" content="<?= htmlspecialchars($meta['twitter_card']); ?>">
+    <meta name="twitter:site" content="<?= htmlspecialchars($meta['twitter_site']); ?>">
+    <meta name="twitter:creator" content="<?= htmlspecialchars($meta['twitter_creator']); ?>">
+
+    <meta name="twitter:url" content="<?= htmlspecialchars($meta['og_url']); ?>">
+    <meta name="twitter:title" content="<?= htmlspecialchars($meta['og_title']); ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($meta['og_description']); ?>">
+    <meta name="twitter:image" content="<?= htmlspecialchars($meta['og_image']); ?>">
 
     <!-- Schema.org Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "serviceType": "Salesforce Commerce Cloud Implementation",
-            "provider": {
-                "@type": "Organization",
-                "name": "SalesClouds",
-                "url": "https://www.salesclouds.com",
-                "logo": "https://www.salesclouds.com/images/salesclouds-logo.jpg"
-            },
-            "description": "SalesClouds offers Salesforce Commerce Cloud services to deliver seamless and personalized shopping experiences across multiple channels. From online storefronts and order management to AI-powered recommendations, we cover all aspects of e-commerce success.",
-            "offers": {
-                "@type": "Offer",
-                "url": "https://www.salesclouds.com/services/salesforce-commerce-cloud",
-                "priceCurrency": "USD",
-                "price": "0",
-                "eligibleRegion": "Worldwide",
-                "availability": "InStock",
-                "validFrom": "2024-09-20"
-            }
-        }
-    </script>
+
+
+    <?php if (!empty($meta['schema_markup'])): ?>
+        <script type="application/ld+json">
+            <?= $meta['schema_markup']; ?>
+        </script>
+    <?php endif; ?>
 
     <!-- Favicon -->
-    <link rel="icon" href="https://www.salesclouds.com/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/fevicon.png" type="image/x-icon">
 
     <!-- Preconnect for Speed Optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,20 +200,24 @@
     <!-- AOS CSS CDN for scroll animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-      <!-- Font Awesome CDN for icons -->
-      <script src="https://kit.fontawesome.com/cdf9a174a4.js" crossorigin="anonymous"></script>
+    <!-- Font Awesome CDN for icons -->
+    <script src="https://kit.fontawesome.com/cdf9a174a4.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
     <?php include_once('navbar.php'); ?>
     <section class="service-wrapper ">
+        <div class="hero">
+            <h1>Salesforce Commerce Cloud</h1>
+
+        </div>
         <section class="service-content-wrapper">
             <section class="service-content-image service" data-aos="fade-up-right" data-aos-duration="1500">
                 <img src="images/secondary-choose.jpg" alt="">
             </section>
             <section class="service-content-data service" data-aos="fade-left" data-aos-duration="1500">
-                <h1>Salesforce Commerce Cloud</h1>
+
                 <p> <strong> Salesforce Commerce Cloud, </strong> formerly known as Demandware, is a cloud-based e-commerce platform that helps businesses deliver personalized and seamless shopping experiences across various channels. Below are some key features of Salesforce Commerce Cloud:-</p>
 
 
@@ -113,12 +241,30 @@
                 </ul>
             </section>
         </section>
+        <div class="book" data-aos="zoom-in" data-aos-duration="1500">
+            <a href="https://calendly.com/salesfocesclouds/30min" class="book">Book Your Free Consultation</a>
+
+        </div>
+
+        <!-- ####### blog #####  -->
+
+        <div class="container" data-aos="zoom-in" data-aos-duration="1000">
+            <h1>Exploring Industry Trends, Ideas, and Real-World Solutions</h1>
+
+        </div>
+
+        <div class="blog-wrapper" id="blog-wrapper" data-aos="fade-up" data-aos-duration="1000">
+            <!-- Blog content will be injected dynamically -->
+            <?php echo renderBlogs($contents); ?>
+        </div>
+
+        <!-- Pagination Links -->
+        <div class="pagination" id="pagination">
+            <?php echo renderPagination($currentPage, $totalPages); ?>
+        </div>
 
     </section>
-    <div class="book" data-aos="zoom-in" data-aos-duration="1500">
-        <a href="https://calendly.com/salesfocesclouds/30min" class="book">Book Your Free Consultation</a>
 
-    </div>
     <?php
     include('footer.php');
     ?>

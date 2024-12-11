@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-html{
+html {
   scroll-behavior: smooth;
 }
 body {
@@ -14,7 +14,6 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-
 }
 .wrapper h1 {
   font-family: "Montserrat-Bold", sans-serif;
@@ -41,7 +40,7 @@ body {
 
 .success_hero {
   width: 100%;
-  height: 100vh;
+  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -55,6 +54,7 @@ body {
   gap: 20px;
   color: white;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  margin-top: 90px;
 }
 
 /* ############################################# success project #############################  */

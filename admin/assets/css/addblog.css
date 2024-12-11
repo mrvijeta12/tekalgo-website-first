@@ -6,30 +6,70 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
+  background-color: #fbfbfb;
   /* max-height: 100vh; */
+  width: 100%;
+  /* padding-bottom: 100px; */
+  /* overflow: hidden; */
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  /* border: 2px solid red; */
+  gap: 20px;
+}
+.child {
+  /* border: 2px solid blue; */
+  /* height: 100%; */
+}
+
+.child2 {
+  flex-grow: 1;
+  padding: 30px 20px 30px 0px;
+  height: 100%;
+  /* border: 2px solid blue; */
+}
+.child1 {
+  width: 200px;
+  /* border: 4px solid green; */
+  /* height: 100%; */
 }
 .form-section {
-  width: 70% !important;
+  width: 100%;
+
+  padding: 0px 30px;
+  /* background-color: #fff; */
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+
   height: 100%;
-  /* border: 2px solid black; */
-  margin: 50px auto;
-  padding: 40px 30px;
-  background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  /* border: 2px solid green; */
+  /* border: 2px solid yellow; */
 }
 .form-section h1 {
   margin-bottom: 25px;
   text-align: center;
   color: red;
 }
+form {
+  /* border: 2px solid blue; */
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  border-radius: 6px; */
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 40px -6px;
+  width: 100%;
+  padding: 20px;
+}
 .form-group {
   margin-bottom: 20px;
   padding: 10px;
   border: 2px solid #ccc; /* Creates the boundary */
   border-radius: 4px;
-  background-color: #f9f9f9; /* Light background for better visibility */
+  background-color: #f9f9f9;
+  /* border: 2px solid red; */
+
+  /* Light background for better visibility */
 }
 
 /* Style for the label */
@@ -63,49 +103,78 @@ body {
 }
 
 .form-group label,
- .form-group input {
+.form-group input {
   display: block;
 }
-.form-group input, .form-group textarea {
+.form-group input,
+.form-group textarea {
   width: 100%;
   font-size: 1rem;
 }
-.form-group textarea{
+.form-group textarea {
   resize: vertical;
   padding: 10px;
+  /* height: 200px; */
+}
+#editor {
+  /* border: 1px solid red; */
+}
+.button {
+  width: 100%;
+  display: flex;
 }
 
-
-input[type="submit"] {
-  min-width: 100%;
+.action-btn {
+  /* min-width: 100%; */
   padding: 10px;
   /* margin-top: 20px; */
   border-radius: 6px;
   border: none;
   color: white;
-  background-color: blueviolet;
+  background-color: #133e87;
+  margin-bottom: 20px;
+  margin-right: 20px;
 }
 
-/* .tox .tox-dialog-wrap__backdrop {
-  background-color: rgba(255, 255, 255, 0.75);
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
-  max-height: 100% !important;
+#category {
+  width: 100%;
+  /* border: 1px solid red; */
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+}
 
-  max-width: 100vw !important;
-} */
+/* ===== for proceed page ====  */
+.form-group-wrapper {
+  display: flex;
+}
+
+.form-group-wrapper .form-group {
+  flex: 1;
+}
+.form-group-wrapper .form-group select {
+  width: 100%;
+  padding: 10px;
+}
+
+/* ===== Responsive =====  */
 
 @media screen and (max-width: 768px) {
   .form-section {
-    width: 90% !important;
+    max-width: 92% !important;
     /* border: 2px solid red; */
-    margin: 0px;
+    /* margin: 0px; */
     padding: 10px;
-    margin: 50px auto;
+    margin: 50px 15px;
+    position: absolute;
+    top: 50px;
+    /* height: 100%; */
+
+    left: 5px;
+    margin: 50px 10px;
+    /* right: 10px; */
+    /* transform: translateX(-50%); */
   }
 
   /* .tox .tox-dialog {
