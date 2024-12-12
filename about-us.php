@@ -128,7 +128,10 @@ try {
 
 <body>
     <div>
-        <?php include('navbar.php'); ?>
+        <?php
+        $base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+
+        include('navbar.php'); ?>
         <div class="wrapper" data-aos="fade-right" data-aos-duration="1500">
 
             <!-- ################################# HERO SECTION ##################################  -->
@@ -169,84 +172,7 @@ try {
 
             <!-- ########################################## swipper #################################  -->
 
-            <!-- <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="swiper-slide-image">
-                            <img src="images/t10.jpg" alt="">
 
-                        </div>
-                        <p>Tony</p>
-                        <p>Salesforce Developer</p>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiper-slide-image">
-                            <img src="images/t8.jpg" alt="">
-
-                        </div>
-                        <p>Tony</p>
-                        <p>Salesforce Developer</p>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiper-slide-image">
-                            <img src="images/t1.jpg" alt="">
-
-                        </div>
-                        <p>Tony</p>
-                        <p>Salesforce Developer</p>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiper-slide-image">
-                            <img src="images/t5.jpg" alt="">
-
-                        </div>
-                        <p>Tony</p>
-                        <p>Salesforce Developer</p>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiper-slide-image">
-                            <img src="images/t9.jpg" alt="">
-
-                        </div>
-                        <p>Tony</p>
-                        <p>Salesforce Developer</p>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiper-slide-image">
-                            <img src="images/t4.jpg" alt="">
-
-                        </div>
-                        <p>Tony</p>
-                        <p>Salesforce Developer</p>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiper-slide-image">
-                            <img src="images/t3.jpg" alt="">
-
-                        </div>
-                        <p>Tony</p>
-                        <p>Salesforce Developer</p>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiper-slide-image">
-                            <img src="images/t6.jpg" alt="">
-
-                        </div>
-                        <p>Tony</p>
-                        <p>Salesforce Developer</p>
-                    </div>
-
-
-
-
-
-
-
-
-
-                </div>
-                <div class="swiper-pagination"></div>
-            </div> -->
 
             <div class="swiper mySwiper">
 

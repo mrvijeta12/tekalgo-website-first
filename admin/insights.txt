@@ -3,6 +3,8 @@ include_once "session.php";
 check_login();
 include_once 'database.php';
 
+
+
 // Get the slug from the URL
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
@@ -16,8 +18,6 @@ $result = $stmt->get_result();
 $blog = null;
 if ($result->num_rows > 0) {
     $blog = $result->fetch_assoc();
-    // Decode HTML entities in summary to avoid extra encoding issues
-    $blog['summary'] = html_entity_decode($blog['summary']);
 } else {
     echo "No content found.";
     exit;
@@ -35,6 +35,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($blog['meta_title']); ?></title>
     <link rel="stylesheet" href="assets/css/viewContent.css">
+
 </head>
 
 <body>
@@ -58,10 +59,8 @@ $conn->close();
             <!-- Text Content -->
             <div class="text-content">
                 <h1><?php echo htmlspecialchars($blog['meta_title']); ?></h1>
-                <!-- Displaying summary with raw HTML (line breaks preserved) -->
-                <p><?php echo $blog['summary']; ?></p>
-
-                <!-- Display content with raw HTML (line breaks and other tags preserved) -->
+                <!-- <p><?php echo htmlspecialchars($blog['summary']); ?></p> -->
+                <p><?php echo nl2br(htmlspecialchars($blog['summary'])); ?></p>
                 <div><?php echo $blog['content']; ?></div>
             </div>
 

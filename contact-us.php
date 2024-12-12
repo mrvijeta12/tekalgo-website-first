@@ -122,7 +122,10 @@ try {
 
 <body>
     <div>
-        <?php include('navbar.php'); ?>
+        <?php
+        $base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+
+        include('navbar.php'); ?>
         <div class="wrapper" data-aos="fade-right" data-aos-duration="1500">
             <div class="about">
                 <h1>Get in Touch</h1>

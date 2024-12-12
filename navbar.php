@@ -1,14 +1,24 @@
 <?php
 
+// Automatically detect the base URL
+//! if working on local directory use this $base_url
+// $base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/';
+$base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+
+
+//! if working on live server(filezilla) use this $base_url
+// $base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
+
+
+
 $current_page = basename($_SERVER['PHP_SELF']);
 
 ?>
+
 <nav class="navbar">
 
-    <a href="/tekalgo/home" class="logo-link">
-        <img src="/tekalgo/images/logo1.png" alt="Logo" class="logo" />
-    </a>
-
+    <a href="<?php echo $base_url; ?>home" class="logo-link">
+        <img src="<?php echo $base_url; ?>images/logo1.png" alt="Logo" class="logo" />
     </a>
 
     <div class="menu-icon" id="menu-toggle">
@@ -22,59 +32,34 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <i class="fas fa-times"></i>
         </span>
 
-        <li><a href="/tekalgo/home" class="nav-link <?php echo ($current_page == 'home.php') ? 'current' : ''; ?>">Home</a></li>
-        <li><a href="/tekalgo/about-us" class="nav-link <?php echo ($current_page == 'about-us.php') ? 'current' : ''; ?>">About Us</a></li>
+        <li><a href="<?php echo $base_url; ?>home" class="nav-link <?php echo ($current_page == 'home.php') ? 'current' : ''; ?>">Home</a></li>
+        <li><a href="<?php echo $base_url; ?>about-us" class="nav-link <?php echo ($current_page == 'about-us.php') ? 'current' : ''; ?>">About Us</a></li>
 
         <li class="dropdown">
-            <a href="/tekalgo/our-services" class="dropbtn nav-link <?php echo ($current_page == 'our-services.php') ? 'current' : ''; ?> ">Our Services</a>
+            <a href="<?php echo $base_url; ?>our-services" class="dropbtn nav-link <?php echo ($current_page == 'our-services.php') ? 'current' : ''; ?> ">Our Services</a>
             <span class="dropdown-icon" id="dropdown-toggle"><i class="fa-solid fa-caret-down"></i></span>
 
             <ul class="dropdown-content" id="dropdown-menu">
-                <li>
-                    <a href="/tekalgo/salesforce-sales-cloud">Salesforce Sales Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-service-cloud">Salesforce Service Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-marketing-cloud">Salesforce Marketing Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-commerce-cloud">Salesforce Commerce Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-experience-cloud">Salesforce Experience Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-financial-cloud">Salesforce Financial Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-community-cloud">Salesforce Community Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-healthcare-cloud">Salesforce Healthcare Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-education-cloud">Salesforce Education Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-public-cloud">Salesforce Public Cloud</a>
-                </li>
-                <li>
-                    <a href="/tekalgo/salesforce-analytic-cloud">Salesforce Analytic Cloud</a>
-                </li>
+                <li><a href="<?php echo $base_url; ?>salesforce-sales-cloud">Salesforce Sales Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-service-cloud">Salesforce Service Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-marketing-cloud">Salesforce Marketing Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-commerce-cloud">Salesforce Commerce Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-experience-cloud">Salesforce Experience Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-financial-cloud">Salesforce Financial Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-community-cloud">Salesforce Community Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-healthcare-cloud">Salesforce Healthcare Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-education-cloud">Salesforce Education Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-public-cloud">Salesforce Public Cloud</a></li>
+                <li><a href="<?php echo $base_url; ?>salesforce-analytic-cloud">Salesforce Analytic Cloud</a></li>
             </ul>
         </li>
-        <li><a href="/tekalgo/insights" class="nav-link <?php echo ($current_page == 'insights.php') ? 'current' : ''; ?>">Insights</a></li>
-        <li><a href="/tekalgo/successes" class="nav-link <?php echo ($current_page == 'successes.php') ? 'current' : ''; ?>">Successes</a></li>
-
-        <li><a href="/tekalgo/contact-us" class="nav-link <?php echo ($current_page == 'contact-us.php') ? 'current' : ''; ?>">Contact Us</a></li>
-
-
-
+        <li><a href="<?php echo $base_url; ?>insights" class="nav-link <?php echo ($current_page == 'insights.php') ? 'current' : ''; ?>">Insights</a></li>
+        <li><a href="<?php echo $base_url; ?>successes" class="nav-link <?php echo ($current_page == 'successes.php') ? 'current' : ''; ?>">Successes</a></li>
+        <li><a href="<?php echo $base_url; ?>contact-us" class="nav-link <?php echo ($current_page == 'contact-us.php') ? 'current' : ''; ?>">Contact Us</a></li>
     </ul>
 
 </nav>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

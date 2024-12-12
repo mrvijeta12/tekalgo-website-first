@@ -62,6 +62,7 @@ $result = $stmt->get_result();
 $blog = null;
 if ($result->num_rows > 0) {
     $blog = $result->fetch_assoc();
+    $blog['summary'] = html_entity_decode($blog['summary']);
 } else {
     echo "No content found.";
     exit;
@@ -70,19 +71,7 @@ if ($result->num_rows > 0) {
 $stmt->close();
 $conn->close();
 
-// Modify image URLs in the blog content
-$blogContent = $blog['content'];
 
-// Using regex to find all image tags and update their src attribute
-$blogContent = preg_replace_callback('/<img[^>]+src="([^"]+)"/', function ($matches) {
-    // Check if the image path doesn't already start with /tekalgo/admin/
-    $imageUrl = $matches[1];
-    if (strpos($imageUrl, '/tekalgo/admin/') !== 0) {
-        // Prepend /tekalgo/admin/ to the image path
-        $imageUrl = '/tekalgo/admin/' . ltrim($imageUrl, '/');
-    }
-    return str_replace($matches[1], $imageUrl, $matches[0]);
-}, $blogContent);
 ?>
 
 <!DOCTYPE html>
@@ -164,19 +153,25 @@ $blogContent = preg_replace_callback('/<img[^>]+src="([^"]+)"/', function ($matc
 
 <body>
     <!-- Navigation Bar -->
-    <?php include "navbar.php"; ?>
+    <?php
+    $base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+    include "navbar.php"; ?>
 
     <div class="wrapper">
         <div class="image-container">
             <?php
             // Fetch the image from the database, check if it's available
-            $featureImage = !empty($blog['social_sharing_image']) ? '/tekalgo/admin/' . htmlspecialchars($blog['social_sharing_image']) : 'default-image.png';
+            $featureImage = !empty($blog['social_sharing_image'])
+                ? $base_url . 'admin/' . htmlspecialchars(ltrim($blog['social_sharing_image'], '/'))
+                : 'default-image.png';
+
             ?>
             <img src='<?php echo $featureImage; ?>' alt='Feature Image'>
             <div class="title-wrapper">
                 <h1 class="title"><?php echo htmlspecialchars($blog['meta_title']); ?></h1>
                 <h3 class="date"><i class="fa-solid fa-calendar-days"></i><?php echo htmlspecialchars($blog['blog_date']); ?></h3>
                 <h3 class="author"><i class="fa-solid fa-pencil"></i><?php echo htmlspecialchars($blog['author']); ?></h3>
+
 
 
             </div>
@@ -191,7 +186,30 @@ $blogContent = preg_replace_callback('/<img[^>]+src="([^"]+)"/', function ($matc
 
             <!-- Text Content -->
             <div class="text-content">
-                <p><?php echo htmlspecialchars($blog['summary']); ?></p>
+                <p><?php echo $blog['summary']; ?></p>
+                <?php
+                // Fetch the image from the database, check if it's available
+                $featureImage = !empty($blog['social_sharing_image'])
+                    ? $base_url . 'admin/' . htmlspecialchars(ltrim($blog['social_sharing_image'], '/'))
+                    : 'default-image.png';
+
+                $blogContent = $blog['content'];
+
+                // Using regex to find all image tags and update their src attribute
+                $blogContent = preg_replace_callback('/<img[^>]+src="([^"]+)"/', function ($matches) use ($base_url) {
+                    $imageUrl = $matches[1]; // Extract the current `src` value
+
+                    // Check if the image path doesn't already start with the base path
+                    if (strpos($imageUrl, $base_url . 'admin/') !== 0) {
+                        // Prepend the base URL and /admin/ to the image path
+                        $imageUrl = $base_url . 'admin/' . ltrim($imageUrl, '/');
+                    }
+
+                    // Replace the original `src` with the updated URL
+                    return str_replace($matches[1], htmlspecialchars($imageUrl), $matches[0]);
+                }, $blogContent);
+                ?>
+
                 <div><?php echo $blogContent; ?></div>
             </div>
         </div>
@@ -207,6 +225,7 @@ $blogContent = preg_replace_callback('/<img[^>]+src="([^"]+)"/', function ($matc
             once: true,
         });
     </script>
+    <script src="swiper.js"></script>
 </body>
 
 </html>

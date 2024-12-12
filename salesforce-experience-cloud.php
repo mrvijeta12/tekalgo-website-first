@@ -205,7 +205,9 @@ function renderPagination($currentPage, $totalPages)
 
 <body>
 
-    <?php include_once('navbar.php'); ?>
+    <?php
+    $base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+    include_once('navbar.php'); ?>
     <section class="service-wrapper ">
         <div class="hero">
             <h1>Salesforce Experience Cloud</h1>
@@ -272,6 +274,7 @@ function renderPagination($currentPage, $totalPages)
             once: true,
         });
     </script>
+    <script src="swiper.js"></script>
 
 </body>
 

@@ -12,6 +12,16 @@
 </head>
 
 <body>
+
+    <?php
+
+    // Automatically detect the base URL
+    $base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/';
+
+
+    $current_page = basename($_SERVER['PHP_SELF']);
+
+    ?>
     <div class="footer_wrapper">
 
 
@@ -19,7 +29,7 @@
 
         <div class="footer_data">
             <div class="footer_data_box">
-                <img src="/tekalgo/images/salesforce-footer.png" alt="">
+                <img src="<?php echo $base_url; ?>images/salesforce-footer.png" alt="">
             </div>
 
             <div class="footer_data_box">
@@ -70,12 +80,12 @@
             <div class="footer_data_box">
                 <h2>Quick Links</h2>
                 <ul>
-                    <li><a href="/tekalgo/index">Home</a></li>
-                    <li><a href="/tekalgo/about">About</a></li>
-                    <li><a href="/tekalgo/services">Services</a></li>
-                    <li><a href="/tekalgo/contact">Contact</a></li>
-                    <li><a href="/tekalgo/blog">Blog</a></li>
-                    <li><a href="/tekalgo/success">Success</a></li>
+                    <li><a href="<?php echo $base_url; ?>home" class="nav-link <?php echo ($current_page == 'home.php') ? 'current' : ''; ?>">Home</a></li>
+                    <li><a href="<?php echo $base_url; ?>about-us" class="nav-link <?php echo ($current_page == 'about-us.php') ? 'current' : ''; ?>">About Us</a></li>
+                    <li><a href="<?php echo $base_url; ?>our-services" class="dropbtn nav-link <?php echo ($current_page == 'our-services.php') ? 'current' : ''; ?> ">Our Services</a></li>
+                    <li><a href="<?php echo $base_url; ?>insights" class="nav-link <?php echo ($current_page == 'insights.php') ? 'current' : ''; ?>">Insights</a></li>
+                    <li><a href="<?php echo $base_url; ?>successes" class="nav-link <?php echo ($current_page == 'successes.php') ? 'current' : ''; ?>">Successes</a></li>
+                    <li><a href="<?php echo $base_url; ?>contact-us" class="nav-link <?php echo ($current_page == 'contact-us.php') ? 'current' : ''; ?>">Contact Us</a></li>
                 </ul>
 
             </div>
@@ -139,7 +149,7 @@
 
         <div class="footer_data copyright">
             <div class="footer_data_box ">
-                <img src="/tekalgo/images/certified-warranty-guarantee-insurance-assurance-concept.jpg" class="certification" alt="">
+                <img src="<?php echo $base_url; ?>images/certified-warranty-guarantee-insurance-assurance-concept.jpg" class="certification" alt="">
             </div>
 
             <div class="footer_data_box">

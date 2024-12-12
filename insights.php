@@ -147,7 +147,9 @@ $conn->close();
 
 <body>
     <div>
-        <?php include('navbar.php'); ?>
+        <?php
+        $base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+        include('navbar.php'); ?>
         <div class="wrapper" data-aos="fade-right" data-aos-duration="1500">
             <div class="about">
                 <h1> Building Smarter on Salesforce</h1>
@@ -173,7 +175,11 @@ $conn->close();
                         $summary = htmlspecialchars($row['summary']);
                         $id = $row['id'];
                         $featureImage = !empty($row['social_sharing_image']) ? 'admin/' . htmlspecialchars($row['social_sharing_image']) : 'default-image.png';
+
+
+
                     ?>
+
                         <a href="insight/<?= $slug ?>" class='content-container' data-aos="zoom-in" data-aos-duration="1500">
                             <!-- Image Container -->
                             <div class='image-container'>

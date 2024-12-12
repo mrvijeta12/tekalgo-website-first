@@ -93,6 +93,9 @@ try {
         </script>
     <?php endif; ?>
 
+    <!-- ====== base url ====  -->
+    <base href="http://localhost/tekalgo/">
+
     <!-- Favicon -->
     <link rel="icon" href="images/fevicon.png" type="image/x-icon">
 
@@ -125,6 +128,7 @@ try {
 <body>
     <div>
         <?php
+        $base_url = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
         include('navbar.php');
         ?>
         <div class="wrapper" data-aos="fade-right" data-aos-duration="1500">
@@ -157,7 +161,7 @@ try {
                 <div class="swiper-wrapper">
 
                     <div class="swiper-slide">
-                        <a href="salesforce-sales-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-sales-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/3.jpg" alt="">
                             </div>
@@ -166,7 +170,7 @@ try {
                     </div>
 
                     <div class="swiper-slide">
-                        <a href="salesforce-service-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-service-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/10.jpg" alt="">
                             </div>
@@ -175,7 +179,7 @@ try {
                     </div>
 
                     <div class="swiper-slide">
-                        <a href="salesforce-marketing-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-marketing-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/marketing.jpg" alt="">
                             </div>
@@ -184,7 +188,7 @@ try {
                     </div>
 
                     <div class="swiper-slide">
-                        <a href="salesforce-commerce-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-commerce-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/commerce.jpg" alt="">
                             </div>
@@ -193,7 +197,7 @@ try {
                     </div>
 
                     <div class="swiper-slide">
-                        <a href="salesforce-experience-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-experience-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/9.jpg" alt="">
                             </div>
@@ -202,7 +206,7 @@ try {
                     </div>
 
                     <div class="swiper-slide">
-                        <a href="salesforce-financial-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-financial-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/7.jpg" alt="">
                             </div>
@@ -211,7 +215,7 @@ try {
                     </div>
 
                     <div class="swiper-slide">
-                        <a href="salesforce-community-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-community-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/community-cloud.jpg" alt="">
                             </div>
@@ -220,7 +224,7 @@ try {
                     </div>
 
                     <div class="swiper-slide">
-                        <a href="salesforce-healthcare-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-healthcare-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/healthcare.jpg" alt="">
                             </div>
@@ -229,7 +233,7 @@ try {
                     </div>
 
                     <div class="swiper-slide">
-                        <a href="salesforce-education-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-education-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/education.jpg" alt="">
                             </div>
@@ -238,7 +242,7 @@ try {
                     </div>
 
                     <div class="swiper-slide">
-                        <a href="salesforce-public-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-public-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/public.jpg" alt="">
                             </div>
@@ -246,7 +250,7 @@ try {
                         </a>
                     </div>
                     <div class="swiper-slide">
-                        <a href="salesforce-analytic-cloud.php">
+                        <a href="<?php echo $base_url; ?>salesforce-analytic-cloud">
                             <div class="swiper-slide-image">
                                 <img src="images/anlaytic-service.jpg" alt="">
                             </div>

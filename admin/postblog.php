@@ -9,17 +9,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Sanitize input fields
     $meta_title = isset($_POST['meta_title']) ? $conn->real_escape_string($_POST['meta_title']) : '';
-    $summary = isset($_POST['summary']) ? $conn->real_escape_string($_POST['summary']) : '';
+    $summary = isset($_POST['summary']) ? $_POST['summary'] : ''; // Don't sanitize summary, keep line breaks intact
     $content = isset($_POST['editorContent']) ? $_POST['editorContent'] : '';
     $category = isset($_POST['category']) ? $conn->real_escape_string($_POST['category']) : '';
 
-    // Normalize content to remove \r\n or replace it with a single newline or space
-    $content = str_replace(array("\r\n", "\r", "\n"), '', $content);
+    // ** Convert newlines to <br> for proper line breaks in summary **
+    $summary = nl2br($summary); // Converts \r\n and \n to <br> tags for display purposes
 
     // ** Don't escape HTML entities here as we're dealing with raw HTML input**
     // Directly use the content as it is from the editor (TinyMCE handles escaping internally)
-    // Ensure that images URLs have no backslashes
-    $content = stripslashes($content); // Remove any backslashes that may have been added by real_escape_string
+    $content = stripslashes($content); // Remove any backslashes added by real_escape_string
 
     // Retrieve the user's email from session (which indicates the user is logged in)
     $user_email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
@@ -93,19 +92,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Prepare the SQL query using prepared statements
     $stmt = $conn->prepare("INSERT INTO main_website_blog (
-        meta_title, 
-        summary, 
-        content, 
-        category, 
-        social_sharing_image, 
-        slug, 
-        blog_status, 
-        blog_date, 
-        blog_time, 
-        created_at, 
-        author
-    ) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                meta_title, 
+                summary, 
+                content, 
+                category, 
+                social_sharing_image, 
+                slug, 
+                blog_status, 
+                blog_date, 
+                blog_time, 
+                created_at, 
+                author
+            ) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Bind parameters (added author)
     $stmt->bind_param("sssssssssss", $meta_title, $summary, $content, $category, $featureImagePath, $slug, $blog_status, $currentDate, $currentTime, $currentDatetime, $author);
